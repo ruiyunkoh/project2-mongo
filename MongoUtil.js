@@ -2,8 +2,8 @@ const MongoClient = require('mongodb').MongoClient;
 
 let _db;
 
-async function connect(url, dbname) {
-    let client = await MongoClient.connect(url, {
+async function connect(uri, dbname) {
+    let client = await MongoClient.connect(uri, {
         useUnifiedTopology: true
     })
     _db = client.db(dbname);

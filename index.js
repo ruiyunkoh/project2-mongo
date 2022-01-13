@@ -16,11 +16,11 @@ async function main() {
 
  await MongoUtil.connect(mongoUrl, "exercise_list");
 
-  // app.get("/", function(req,res){
-  //   res.json({
-  //     "message":"hello"
-  //   })
-  // })
+  app.get("/", function(req,res){
+    res.json({
+      "message":"hello"
+    })
+  })
   
   //Add in new exercise POST
   app.post("/new_exercise", async (req, res) => {
@@ -45,29 +45,17 @@ async function main() {
 
 
     let result = await db.collection("exercises").insertOne({
-      poster, 
-      title, 
-      image,
-      duration,
-      description,
-      routine,
-      type, 
-      intensity,
-      target_area,
-      calories_burnt,
-      tags
-      
-      // "poster": poster,
-      // "title": title,
-      // "image": image,
-      // "duration": duration,
-      // "description": description,
-      // "routine": routine,
-      // "type": type,
-      // "intensity": intensity,
-      // "target area": target_area,
-      // "calories burnt": calories_burnt,
-      // "tags": tags
+      "poster": poster,
+      "title": title,
+      "image": image,
+      "duration": duration,
+      "description": description,
+      "routine": routine,
+      "type": type,
+      "intensity": intensity,
+      "target area": target_area,
+      "calories burnt": calories_burnt,
+      "tags": tags
 
     });
     res.json(result);
