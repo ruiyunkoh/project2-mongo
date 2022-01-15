@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const ObjectId = require("mongodb").ObjectId;
 const MongoUtil = require("./MongoUtil");
+const { request } = require("express");
 
 const mongoUrl = process.env.MONGO_URI;
 
@@ -14,35 +15,22 @@ app.use(cors());
 
 async function main() {
 
- await MongoUtil.connect(mongoUrl, "exercise_list");
+  await MongoUtil.connect(mongoUrl, "exercise_list");
 
-  app.get("/", function(req,res){
+  app.get("/", function (req, res) {
     res.json({
-      "message":"hello"
+      "message": "hello"
     })
   })
-  
+
   //Add in new exercise POST
   app.post("/new_exercise", async (req, res) => {
     const db = MongoUtil.getDB();
 
-    let {poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags} = req.body;
+    let { poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags } = req.body;
     if (!Array.isArray(tags)) {
       tags = [tags];
     }
-
-    // let poster = req.body.poster;
-    // let title = req.body.title;
-    // let image = req.body.image;
-    // let duration = req.body.duration;
-    // let description = req.body.description;
-    // let routine = req.body.routine;
-    // let type = req.body.type;
-    // let intensity = req.body.intensity;
-    // let target_area = req.body.target_area;
-    // let calories_burnt = req.body.calories_burnt;
-    // let tags = req.body.tags;
-
 
     let result = await db.collection("exercises").insertOne({
       "poster": poster,
@@ -60,6 +48,69 @@ async function main() {
     });
     res.json(result);
 
+  });
+
+  //Get endpoint
+
+  app.get("/find_exercise", async (req, res) => {
+    const db = MongoUtil.getDB();
+    let criteria = {};
+
+    if (req.query.title) {
+      criteria["title"] = {
+        $regex: req.query.title,
+        $options: "i"
+      }
+    }
+
+    if (req.query.type) {
+      criteria["type"] = {
+        $regex: req.query.type,
+        $options: "i"
+      }
+    }
+
+    if (req.query.intensity) {
+      criteria["intensity"] = {
+        $regex: req.query.intensity,
+        $options: "i"
+      }
+    }
+
+    let results = await db
+      .collection("exercises")
+      .find(criteria)
+      .toArray();
+
+    res.json(results);
+  });
+
+  // Update document in API
+
+  app.put("/exercise__list/:id", async (req, res) => {
+    let { poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags } = req.body;
+    if (!Array.isArray(tags)) {
+      tags = [tags];
+    }
+
+    let results = await db.collection('exercises').updateOne({
+      _id: ObjectId(req.params.id)
+    }, {
+      '$set': {
+        "poster": poster,
+        "title": title,
+        "image": image,
+        "duration": duration,
+        "description": description,
+        "routine": routine,
+        "type": type,
+        "intensity": intensity,
+        "target area": target_area,
+        "calories burnt": calories_burnt,
+        "tags": tags
+      }
+    })
+    res.send(results);
   });
 }
 
