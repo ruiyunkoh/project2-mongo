@@ -87,7 +87,7 @@ async function main() {
 
   // Update document in API
 
-  app.put("/exercise__list/:id", async (req, res) => {
+  app.put("/find_exercise/:id", async (req, res) => {
     let { poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags } = req.body;
     if (!Array.isArray(tags)) {
       tags = [tags];
@@ -112,6 +112,16 @@ async function main() {
     })
     res.send(results);
   });
+
+  //Delete document in API
+
+  app.delete("/find_exercise/:id", async(req,res) => {
+    let results = await db.collection("exercises").remove({
+      _id: ObjectId(req.params.id)
+    });
+    res.send(results);
+  });
+
 }
 
 main();
