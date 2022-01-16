@@ -17,11 +17,11 @@ async function main() {
 
   await MongoUtil.connect(mongoUrl, "exercise_list");
 
-  app.get("/", function (req, res) {
-    res.json({
-      "message": "hello"
-    })
-  })
+  // app.get("/", function (req, res) {
+  //   res.json({
+  //     "message": "hello"
+  //   })
+  // })
 
   //Add in new exercise POST
   app.post("/new_exercise", async (req, res) => {
