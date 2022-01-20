@@ -86,10 +86,11 @@ async function main() {
   });
 
   app.get('/find_exercise/:exerciseId', async (req, res) => {
-    let r = await db.collection('exercises').findOne({
-        _id: new ObjectId(req.params.exerciseId)
+    const db = MongoUtil.getDB();
+    let results = await db.collection('exercises').findOne({
+      _id: ObjectId(req.params.exerciseId)
     });
-    res.json(r);
+    res.send(results);
   });
 
   // Update document in API
