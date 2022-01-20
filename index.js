@@ -85,6 +85,13 @@ async function main() {
     res.json(results);
   });
 
+  app.get('/find_exercise/:exerciseId', async (req, res) => {
+    let r = await db.collection('exercises').findOne({
+        _id: new ObjectId(req.params.exerciseId)
+    });
+    res.json(r);
+  });
+
   // Update document in API
 
   app.put("/find_exercise/:id", async (req, res) => {
