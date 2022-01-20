@@ -27,7 +27,7 @@ async function main() {
   app.post("/new_exercise", async (req, res) => {
     const db = MongoUtil.getDB();
 
-    let { poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags } = req.body;
+    let { poster, title, image, duration, description, routine, type, intensity, targetArea, caloriesBurnt, tags } = req.body;
     if (!Array.isArray(tags)) {
       tags = [tags];
     }
@@ -41,8 +41,8 @@ async function main() {
       "routine": routine,
       "type": type,
       "intensity": intensity,
-      "target area": target_area,
-      "calories burnt": calories_burnt,
+      "target area": targetArea,
+      "calories burnt": caloriesBurnt,
       "tags": tags
 
     });
@@ -86,6 +86,7 @@ async function main() {
   });
 
   app.get('/find_exercise/:exerciseId', async (req, res) => {
+    console.log(`get`, req)
     const db = MongoUtil.getDB();
     let results = await db.collection('exercises').findOne({
       _id: ObjectId(req.params.exerciseId)
@@ -96,7 +97,8 @@ async function main() {
   // Update document in API
 
   app.put("/find_exercise/:id", async (req, res) => {
-    let { poster, title, image, duration, description, routine, type, intensity, target_area, calories_burnt, tags } = req.body;
+    console.log(`put`, req);
+    let { poster, title, image, duration, description, routine, type, intensity, targetArea, caloriesBurnt, tags } = req.body;
     if (!Array.isArray(tags)) {
       tags = [tags];
     }
@@ -113,8 +115,8 @@ async function main() {
         "routine": routine,
         "type": type,
         "intensity": intensity,
-        "target area": target_area,
-        "calories burnt": calories_burnt,
+        "target area": targetArea,
+        "calories burnt": caloriesBurnt,
         "tags": tags
       }
     })
