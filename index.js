@@ -125,7 +125,7 @@ async function main() {
 
   //Delete document in API
 
-  app.delete("/selectedexercise/:id", async (req, res) => {
+  app.delete("/new_exercise/:id", async (req, res) => {
     let results = await db.collection("exercises").remove({
       _id: ObjectId(req.params.id)
     });
