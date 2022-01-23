@@ -41,8 +41,8 @@ async function main() {
       "routine": routine,
       "type": type,
       "intensity": intensity,
-      "target_area": targetArea,
-      "calories_burnt": caloriesBurnt,
+      "targetArea": targetArea,
+      "caloriesBurnt": caloriesBurnt,
       "tags": tags
 
     });
@@ -116,8 +116,8 @@ async function main() {
         "routine": routine,
         "type": type,
         "intensity": intensity,
-        "target_area": targetArea,
-        "calories_burnt": caloriesBurnt,
+        "targetArea": targetArea,
+        "caloriesBurnt": caloriesBurnt,
         "tags": tags
       }
     })
