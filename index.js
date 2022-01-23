@@ -129,7 +129,9 @@ async function main() {
     let results = await db.collection("exercises").remove({
       _id:ObjectId(req.params.id)
     });
-    res.send(results);
+    res.send({
+      message: "ok"
+    });
   });
 
 }
