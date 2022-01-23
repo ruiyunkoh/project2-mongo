@@ -98,6 +98,7 @@ async function main() {
 
   app.put("/find_exercise/:id", async (req, res) => {
     console.log(`put`, req);
+    const db = MongoUtil.getDB();
     let { poster, title, image, duration, description, routine, type, intensity, targetArea, caloriesBurnt, tags } = req.body;
     if (!Array.isArray(tags)) {
       tags = [tags];
@@ -126,6 +127,7 @@ async function main() {
   //Delete document in API
 
   app.delete("/find_exercise/:id", async (req, res) => {
+    const db = MongoUtil.getDB();
     let results = await db.collection("exercises").remove({
       _id:ObjectId(req.params.id)
     });
