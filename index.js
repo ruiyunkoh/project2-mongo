@@ -96,7 +96,7 @@ async function main() {
 
   // Update document in API
 
-  app.put("/new_exercise/:id", async (req, res) => {
+  app.put("/find_exercise/:id", async (req, res) => {
     console.log(`put`, req);
     let { poster, title, image, duration, description, routine, type, intensity, targetArea, caloriesBurnt, tags } = req.body;
     if (!Array.isArray(tags)) {
