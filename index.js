@@ -57,8 +57,8 @@ async function main() {
     let criteria = {};
 
     if (req.query.title) {
-      criteria["title"] = {
-        $regex: req.query.title,
+      criteria["targetArea"] = {
+        $regex: req.query.targetArea,
         $options: "i"
       }
     }
