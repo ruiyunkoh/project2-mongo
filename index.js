@@ -87,7 +87,7 @@ async function main() {
 
     let results = await db
       .collection("exercises")
-      .find(criteria).projection({tags:1, type: 1, intensity: 1, caloriesBurnt:1})
+      .find(criteria)
       .toArray();
 
     res.json(results);
