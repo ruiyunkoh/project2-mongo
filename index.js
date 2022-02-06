@@ -36,13 +36,13 @@ async function main() {
       "poster": poster,
       "title": title,
       "image": image,
-      "duration": duration,
+      "duration": parseInt(duration),
       "description": description,
       "routine": routine,
       "type": type,
       "intensity": intensity,
       "targetArea": targetArea,
-      "caloriesBurnt": caloriesBurnt,
+      "caloriesBurnt": parseInt(caloriesBurnt),
       "tags": tags
 
     });
@@ -54,13 +54,12 @@ async function main() {
 
   app.get("/find_exercise", async (req, res) => {
     const db = MongoUtil.getDB();
-    let criteria = { tags: {$in: []}, $and: [{type: []}, {intensity:[]}], caloriesBurnt: {$gt: 200} };
-    // let criteria = {};
+    // let criteria = { tags: {$in: []}, $and: [{type: []}, {intensity:[]}], caloriesBurnt: {$gt: 200} };
+    let criteria = {};
 
-    if (req.query.title) {
+    if (req.query.tags) {
       criteria["tags"] = {
-        $regex: req.query.tags,
-        $options: "i"
+        "$in":[req.query.tags]
       }
     }
 
@@ -78,10 +77,19 @@ async function main() {
       }
     }
 
-    if (req.query.intensity) {
+    if (req.query.caloriesBurnt) {
+      let caloriesBurnt = req.query.caloriesBurnt; 
+      if (typeof caloriesBurnt == 'string') {caloriesBurnt = parseInt(caloriesBurnt);}
       criteria["caloriesBurnt"] = {
-        $regex: req.query.caloriesBurnt,
-        $options: "i"
+        "$gt": caloriesBurnt        
+      }
+    }
+
+    if (req.query.duration) {
+      let duration = req.query.duration; 
+      if (typeof duration == 'string') {duration = parseInt(duration);}
+      criteria["duration"] = {
+        "$lt": duration        
       }
     }
 
@@ -119,13 +127,13 @@ async function main() {
         "poster": poster,
         "title": title,
         "image": image,
-        "duration": duration,
+        "duration": parseInt(duration),
         "description": description,
         "routine": routine,
         "type": type,
         "intensity": intensity,
         "targetArea": targetArea,
-        "caloriesBurnt": caloriesBurnt,
+        "caloriesBurnt": parseInt(caloriesBurnt),
         "tags": tags
       }
     })
