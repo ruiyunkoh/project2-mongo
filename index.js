@@ -42,7 +42,7 @@ async function main() {
       "type": type,
       "intensity": intensity,
       "targetArea": targetArea,
-      "caloriesBurnt": caloriesBurnt,
+      "caloriesBurnt": parseInt(caloriesBurnt),
       "tags": tags
 
     });
@@ -54,11 +54,11 @@ async function main() {
 
   app.get("/find_exercise", async (req, res) => {
     const db = MongoUtil.getDB();
-    let criteria = {};
+    let criteria = { tags: {$in: []}, $and: [{type: []}, {intensity:[]}], caloriesBurnt: {$gt: 200} };
 
     if (req.query.title) {
-      criteria["targetArea"] = {
-        $regex: req.query.targetArea,
+      criteria["tags"] = {
+        $regex: req.query.tags,
         $options: "i"
       }
     }
@@ -77,9 +77,16 @@ async function main() {
       }
     }
 
+    if (req.query.intensity) {
+      criteria["caloriesBurnt"] = {
+        $regex: req.query.caloriesBurnt,
+        $options: "i"
+      }
+    }
+
     let results = await db
       .collection("exercises")
-      .find(criteria)
+      .find(criteria).projection({tags:1, type: 1, intensity: 1, caloriesBurnt:1})
       .toArray();
 
     res.json(results);
@@ -117,7 +124,7 @@ async function main() {
         "type": type,
         "intensity": intensity,
         "targetArea": targetArea,
-        "caloriesBurnt": caloriesBurnt,
+        "caloriesBurnt": parseInt(caloriesBurnt),
         "tags": tags
       }
     })
