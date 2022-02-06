@@ -54,8 +54,8 @@ async function main() {
 
   app.get("/find_exercise", async (req, res) => {
     const db = MongoUtil.getDB();
-    // let criteria = { tags: {$in: []}, $and: [{type: []}, {intensity:[]}], caloriesBurnt: {$gt: 200} };
-    let criteria = {};
+    let criteria = { tags: {$in: []}, $and: [{type: []}, {intensity:[]}], caloriesBurnt: {$gt: 200} };
+    // let criteria = {};
 
     if (req.query.title) {
       criteria["tags"] = {
