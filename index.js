@@ -78,10 +78,10 @@ async function main() {
     }
 
     if (req.query.caloriesBurnt) {
-      let caloriesBurnt = req.query.caloriesBurnt; 
-      if (typeof caloriesBurnt == 'string') {caloriesBurnt = parseInt(caloriesBurnt);}
+      // let caloriesBurnt = req.query.caloriesBurnt; 
+      // if (typeof caloriesBurnt == 'string') {caloriesBurnt = parseInt(caloriesBurnt);}
       criteria["caloriesBurnt"] = {
-        "$gt": caloriesBurnt        
+        "$gt": req.query.caloriesBurnt     
       }
     }
 
