@@ -77,12 +77,12 @@ async function main() {
     }
 
     if (req.query.caloriesBurnt) {
-      // let caloriesBurnt = req.query.caloriesBurnt; 
-      // if (typeof caloriesBurnt == 'string') {caloriesBurnt = parseInt(caloriesBurnt);}
+      let caloriesBurnt = req.query.caloriesBurnt; 
+      if (typeof caloriesBurnt == 'string') {caloriesBurnt = parseInt(caloriesBurnt);}
       criteria["caloriesBurnt"] = {
-        "$gt": req.query.caloriesBurnt     
+        "$gt": caloriesBurnt     
       }
-    } console.log(caloriesBurnt);
+    } 
 
     if (req.query.duration) {
       let duration = req.query.duration; 
