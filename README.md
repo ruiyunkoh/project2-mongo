@@ -1,4 +1,4 @@
-#RESTFUL API
+# RESTFUL API
 
 API is deployed on Heroku: https://kry-exercise.herokuapp.com/find_exercise <br>
 API is used in website deployment on Netlify: https://practical-galileo-4a477c.netlify.app <br> 
